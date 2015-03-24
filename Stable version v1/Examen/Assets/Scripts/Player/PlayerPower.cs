@@ -238,9 +238,9 @@ public class PlayerPower : MonoBehaviour
     void GObjectSetup(ref GameObject temp)
     {
         temp.GetComponent<PowerStructure>().InitiatieValues(new Vector3(1, 1, 1), AimDirection(defRange), true);
-        temp.rigidbody.useGravity = false;
-        temp.rigidbody.isKinematic = false;
-        temp.rigidbody.AddForce(shootSpeed * (Camera.main.transform.forward));
+        temp.GetComponent<Rigidbody>().useGravity = false;
+        temp.GetComponent<Rigidbody>().isKinematic = false;
+        temp.GetComponent<Rigidbody>().AddForce(shootSpeed * (Camera.main.transform.forward));
     }
 
     private Vector3 AimDirection(float distance)
@@ -268,17 +268,17 @@ public class PlayerPower : MonoBehaviour
     private float ItemSizeDistance()
     {
         return m_distanceCounter +  // 1f som standard där senare storleken avgör distancen
-            (m_currentPickupObj.collider.transform.localScale.x +
-            m_currentPickupObj.collider.transform.localScale.y +
-            m_currentPickupObj.collider.transform.localScale.z) / 3;
+            (m_currentPickupObj.GetComponent<Collider>().transform.localScale.x +
+            m_currentPickupObj.GetComponent<Collider>().transform.localScale.y +
+            m_currentPickupObj.GetComponent<Collider>().transform.localScale.z) / 3;
     }
 
     private float ItemSizeDistance(GameObject obj)
     {
         return m_distanceCounter +  // 1f som standard där senare storleken avgör distancen
-    (obj.collider.transform.localScale.x +
-    obj.collider.transform.localScale.y +
-    obj.collider.transform.localScale.z) / 3;
+    (obj.GetComponent<Collider>().transform.localScale.x +
+    obj.GetComponent<Collider>().transform.localScale.y +
+    obj.GetComponent<Collider>().transform.localScale.z) / 3;
     }
 
     public bool grabHit(float distance)
@@ -290,7 +290,7 @@ public class PlayerPower : MonoBehaviour
         {
             if (m_hitInfoFromObject.collider.gameObject.layer == LayerMask.NameToLayer("Item"))
             {
-                m_currentPickupObj = m_hitInfoFromObject.collider.rigidbody;
+                m_currentPickupObj = m_hitInfoFromObject.collider.GetComponent<Rigidbody>();
                 //Camera.main.transform.position + m_hitInfoFromObject.distance * Camera.main.transform.forward;
                 return true;
             }

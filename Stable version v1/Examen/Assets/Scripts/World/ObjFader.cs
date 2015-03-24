@@ -20,14 +20,14 @@ public class ObjFader : MonoBehaviour {
         {
             alpha += fadeDir * fadeSpeed * Time.deltaTime;
             alpha = Mathf.Clamp01(alpha);
-            renderer.material.color = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, alpha);
+            GetComponent<Renderer>().material.color = new Color(GetComponent<Renderer>().material.color.r, GetComponent<Renderer>().material.color.g, GetComponent<Renderer>().material.color.b, alpha);
             fade = (alpha != fadeDir);
             if (!fade)
                 gameObject.SetActive(false);
         }
         else if (fixFade)
         {
-            renderer.material.color = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, alpha);
+            GetComponent<Renderer>().material.color = new Color(GetComponent<Renderer>().material.color.r, GetComponent<Renderer>().material.color.g, GetComponent<Renderer>().material.color.b, alpha);
             fixFade = false;
         }
     }

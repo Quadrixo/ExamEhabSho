@@ -225,7 +225,7 @@ public class PowerManager
 
                 obj.transform.position = Camera.main.transform.position + Camera.main.transform.forward + new Vector3(0,-0.2f,0);
 
-                obj.rigidbody.AddForce( Camera.main.transform.forward);
+                obj.GetComponent<Rigidbody>().AddForce( Camera.main.transform.forward);
 
                 if (_item.hasMerged)
                     obj.GetComponent<ItemProperties>().hasItem = _item.m_merge;

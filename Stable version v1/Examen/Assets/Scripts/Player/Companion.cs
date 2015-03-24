@@ -89,19 +89,19 @@ public class Companion : MonoBehaviour
     void Form()
     {
 
-        light.color = Color.Lerp(light.color, newColour, Colortimer * Time.deltaTime);
+        GetComponent<Light>().color = Color.Lerp(GetComponent<Light>().color, newColour, Colortimer * Time.deltaTime);
         foreach (ParticleSystem p in sparks)
-            p.startColor = light.color;
+            p.startColor = GetComponent<Light>().color;
 
         for (int i = 0; i < body.Count; i++)
         {
             body[i].localScale = Vector3.Lerp(body[i].localScale, bodySize[i], bodyTimer * Time.deltaTime);
-            body[i].renderer.material.color = Color.Lerp(light.color, newColour, Colortimer * Time.deltaTime);
+            body[i].GetComponent<Renderer>().material.color = Color.Lerp(GetComponent<Light>().color, newColour, Colortimer * Time.deltaTime);
             if (body[i].localScale == bodySize[i])
                 bodySize[i] = new Vector3(Random.Range(0f, 0.1f), Random.Range(0f, 0.1f), Random.Range(0f, 0.1f));
         }
 
-        if (light.color == newColour)
+        if (GetComponent<Light>().color == newColour)
         {
             newColour = GenerateNewColor();
         }
@@ -117,7 +117,7 @@ public class Companion : MonoBehaviour
             if (elapsedTime >= 1)
             {
                 startTime = Time.time;
-                objToCatch.rigidbody.velocity = Vector3.zero;
+                objToCatch.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 from = transform.position;
                 objToCatch = null;
             }
@@ -158,7 +158,7 @@ public class Companion : MonoBehaviour
     {
         if (coll.gameObject.layer == LayerMask.NameToLayer("Item"))
             if (newCatch)   
-                 newCatch = ControllCatch(coll, coll.gameObject.transform.rigidbody.velocity);
+                 newCatch = ControllCatch(coll, coll.gameObject.transform.GetComponent<Rigidbody>().velocity);
     }
 
     bool ControllCatch(Collider coll, Vector3 _velocity)

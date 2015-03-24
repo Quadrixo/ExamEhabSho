@@ -189,7 +189,7 @@ public class HandProperties : MonoBehaviour
 
 
             // Förhindrar objectet att fastna/försvinna i onödan
-            m_currentPickupObj.gameObject.rigidbody.AddForce(0, 0.01f, 0);
+            m_currentPickupObj.gameObject.GetComponent<Rigidbody>().AddForce(0, 0.01f, 0);
             m_currentPickupObj.gameObject.transform.position += (travelDir * grabSpeed) + movementVelocity;
 
 
@@ -259,9 +259,9 @@ public class HandProperties : MonoBehaviour
     private float ItemSizeDistance()
     {
         return m_distanceCounter +  // 1f som standard där senare storleken avgör distancen
-            (m_currentPickupObj.collider.transform.localScale.x +
-            m_currentPickupObj.collider.transform.localScale.y +
-            m_currentPickupObj.collider.transform.localScale.z) / 3;
+            (m_currentPickupObj.GetComponent<Collider>().transform.localScale.x +
+            m_currentPickupObj.GetComponent<Collider>().transform.localScale.y +
+            m_currentPickupObj.GetComponent<Collider>().transform.localScale.z) / 3;
     }
 
     private bool isMoving()
@@ -339,7 +339,7 @@ public class HandProperties : MonoBehaviour
         while (i < amountOfParticles)
         {
             GameObject temp = (GameObject)Instantiate(particleSystem, m_hitInfoFromObject.point, Quaternion.identity);
-            temp.particleSystem.startSize = Mathf.Lerp(0.05f, 1.5f, m_hitInfoFromObject.transform.localScale.x / 80);
+            temp.GetComponent<ParticleSystem>().startSize = Mathf.Lerp(0.05f, 1.5f, m_hitInfoFromObject.transform.localScale.x / 80);
             temp.transform.LookAt(GameObject.Find("First Person Controller").transform);
             i++;
         }

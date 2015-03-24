@@ -51,12 +51,12 @@ public class PowerStructure : MonoBehaviour
                 if (c.gameObject.layer == LayerMask.NameToLayer("Item"))
                 {
                     Rigidbody rb = c.attachedRigidbody;
-                    if (rb != null && rb != rigidbody && !rbs.Contains(rb))
+                    if (rb != null && rb != GetComponent<Rigidbody>() && !rbs.Contains(rb))
                     {
                         rbs.Add(rb);
 
                         Vector3 offset = transform.position - c.transform.position;
-                        rb.AddForce(offset / offset.sqrMagnitude * rigidbody.mass * 40);
+                        rb.AddForce(offset / offset.sqrMagnitude * GetComponent<Rigidbody>().mass * 40);
                     }
                 }
             }
@@ -69,9 +69,9 @@ public class PowerStructure : MonoBehaviour
                            out hitInfoFromObject, ~(1 << LayerMask.NameToLayer("Player"))))
                 if (hitInfoFromObject.collider.gameObject.layer == LayerMask.NameToLayer("WorldPiece"))
                 {
-                    rigidbody.useGravity = true;
-                    rigidbody.isKinematic = false;
-                    collider.isTrigger = false;
+                    GetComponent<Rigidbody>().useGravity = true;
+                    GetComponent<Rigidbody>().isKinematic = false;
+                    GetComponent<Collider>().isTrigger = false;
                     isFired = false;
                 }
             #endregion
@@ -109,9 +109,9 @@ public class PowerStructure : MonoBehaviour
             if (coll.gameObject.layer == LayerMask.NameToLayer("WorldPiece"))
             {
 
-                rigidbody.useGravity = true;
-                rigidbody.isKinematic = false;
-                collider.isTrigger = false;
+                GetComponent<Rigidbody>().useGravity = true;
+                GetComponent<Rigidbody>().isKinematic = false;
+                GetComponent<Collider>().isTrigger = false;
                 isFired = false;
             }
 

@@ -34,7 +34,7 @@ public class Pickeditem : Movement
         else
             m_obj.GetComponent<CapsuleCollider>().isTrigger = true;
 
-        GameObject.DestroyImmediate(_obj.rigidbody);
+        GameObject.DestroyImmediate(_obj.GetComponent<Rigidbody>());
 
         setMoveTo = Positions.face;
         setScaleTo = Scaling.PickupScale;
@@ -66,7 +66,7 @@ public class Pickeditem : Movement
         m_itemInfo = m_obj.GetComponent<ItemProperties>();
 
 
-        GameObject.DestroyImmediate(m_obj.rigidbody);
+        GameObject.DestroyImmediate(m_obj.GetComponent<Rigidbody>());
         if (m_obj.GetComponent<BoxCollider>())
             m_obj.GetComponent<BoxCollider>().isTrigger = true;
         else if (m_obj.GetComponent<SphereCollider>())
@@ -104,7 +104,7 @@ public class Pickeditem : Movement
         m_obj = (GameObject)GameObject.Instantiate(GlobalItems.g_listOfObj[_type], _pos, Quaternion.identity);
 
         m_itemInfo = m_obj.GetComponent<ItemProperties>();
-        GameObject.DestroyImmediate(m_obj.rigidbody);
+        GameObject.DestroyImmediate(m_obj.GetComponent<Rigidbody>());
 
         if (m_obj.GetComponent<BoxCollider>())
             m_obj.GetComponent<BoxCollider>().isTrigger = true;

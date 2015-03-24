@@ -50,9 +50,17 @@ public class ItemProperties : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        if (particleTimer > 0)
+            particleTimer -= Time.time;
+        else if (m_currentParticles != 0)
+        {
+            particleTimer = 0.1f;
+            m_currentParticles -= 1;
+        }
+
         if(reSize)
         {
-            float fraction = (Time.time - reSizeTimer) / 1;
+            float fraction = (Time.time - reSizeTimer);
             transform.localScale = Vector3.Slerp(Vector3.zero, new Vector3(.1f, .1f, .1f), fraction);
             if (fraction >= 1)
                 reSize = false;
@@ -61,19 +69,26 @@ public class ItemProperties : MonoBehaviour {
 
         if (!TextValue)
         {
-            TextValue = (GameObject)GameObject.Instantiate(GlobalItems.g_listOfObj[4], transform.position + new Vector3(0,.2f,0), Quaternion.identity);
+            TextValue = (GameObject)GameObject.Instantiate(GlobalItems.g_listOfObj[4], transform.position + new Vector3(0, .2f, 0), Quaternion.identity);
             TextValue.transform.parent = this.transform;
             TextValue.GetComponent<TextMesh>().transform.localScale = new Vector3(.1f, .1f, .1f);
-
         }
+        else
+            textUpdate();
 
+       
 
+            
+    }
+
+    public void textUpdate()
+    {
         if (gameObject.layer == LayerMask.NameToLayer("Item"))
         {
 
-            if(TypeID == Type.Capsule)
+            if (TypeID == Type.Capsule)
             {
-                
+
                 TextValue.GetComponent<TextMesh>().text = part1Value + "\n--\n" + part2Value;
             }
             else
@@ -107,17 +122,12 @@ public class ItemProperties : MonoBehaviour {
             TextValue.GetComponent<TextMesh>().color = (negative) ? Color.red : Color.green;
 
         }
+
         TextValue.transform.LookAt(2 * transform.position - Camera.main.transform.position);
-        
-        if (particleTimer > 0)
-            particleTimer -= Time.time;
-        else if (m_currentParticles != 0)
-        {
-            particleTimer = 0.1f;
-            m_currentParticles -= 1;
-        }
-            
+
     }
+
+
 
     public string texten
     {
@@ -230,8 +240,10 @@ public class ItemProperties : MonoBehaviour {
                 if (m_currentParticles < m_maxParticles)
                 {
                     GameObject temp = (GameObject)Instantiate(hitParticle, pos, Quaternion.identity);
-                    temp.particleSystem.startSize = (this.transform.localScale.x);
+                    temp.GetComponent<ParticleSystem>().startSize = (this.transform.localScale.x);
                     temp.transform.LookAt(this.transform);
+                    m_currentParticles++;
+
                 }
             }
         }
@@ -241,12 +253,9 @@ public class ItemProperties : MonoBehaviour {
     {
         for (int i = 0; i < 5; i++)
         {
-            if (m_currentParticles < m_maxParticles)
-            {
-                GameObject temp = (GameObject)Instantiate(hitParticle, transform.position, Quaternion.identity);
-                temp.particleSystem.startSize = (this.transform.localScale.x);
-                temp.transform.LookAt(GameObject.Find("Main Camera").transform);
-            }
+            GameObject temp = (GameObject)Instantiate(hitParticle, transform.position, Quaternion.identity);
+            temp.GetComponent<ParticleSystem>().startSize = (this.transform.localScale.x);
+            temp.transform.LookAt(GameObject.Find("Main Camera").transform);
         }
 
     }

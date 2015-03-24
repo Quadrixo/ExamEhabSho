@@ -27,9 +27,9 @@ public class RunAni : MonoBehaviour {
 	void Start () {
         a = GetComponent<Animation>();
         player = GameObject.Find("First Person Controller");
-        animation[clip.name].time = clip.length - 0.01f;
+        GetComponent<Animation>()[clip.name].time = clip.length - 0.01f;
         a.Play(clip.name);
-        animation[clip.name].speed = 0;
+        GetComponent<Animation>()[clip.name].speed = 0;
         
         if (Grow)
         {
@@ -47,9 +47,9 @@ public class RunAni : MonoBehaviour {
             if (Vector3.Distance(player.transform.position, this.transform.position) < Distance)
             {
                 playSpeed = playSpeed * clip.length;
-                animation[clip.name].speed = -playSpeed;
+                GetComponent<Animation>()[clip.name].speed = -playSpeed;
                 a.Play(clip.name);
-                animation[clip.name].time = clip.length/3 - 0.01f;
+                GetComponent<Animation>()[clip.name].time = clip.length/3 - 0.01f;
 
                 PlayerDist = !PlayerDist;
             }
@@ -80,7 +80,7 @@ public class RunAni : MonoBehaviour {
 
                 playSpeed = playSpeed * clip.length;
                 
-                animation[clip.name].speed = -playSpeed;
+                GetComponent<Animation>()[clip.name].speed = -playSpeed;
                 a.Play(clip.name);
             }
     }

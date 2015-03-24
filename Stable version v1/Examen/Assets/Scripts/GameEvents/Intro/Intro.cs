@@ -136,7 +136,7 @@ public class Intro : MonoBehaviour {
     {
         if (Player)
         {
-            Player.rigidbody.AddForce(new Vector3(0, 0.1f, 0));
+            Player.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0.1f, 0));
             return false;
         }
         else

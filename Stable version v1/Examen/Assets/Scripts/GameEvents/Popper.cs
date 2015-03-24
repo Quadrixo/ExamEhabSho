@@ -46,8 +46,8 @@ public class Popper : MonoBehaviour
         {
             originSize.Add(g.transform.localScale);
             g.transform.localScale = Vector3.zero;
-            if (g.rigidbody)
-                g.rigidbody.useGravity = false;
+            if (g.GetComponent<Rigidbody>())
+                g.GetComponent<Rigidbody>().useGravity = false;
         }
         timeSpammer = Time.time;
         timer = Time.time;
@@ -72,7 +72,7 @@ public class Popper : MonoBehaviour
                 GameObject temp = (GameObject)GameObject.Instantiate(SingelMultiPop, dropPosition.position, Quaternion.identity);
                 temp.GetComponent<ItemProperties>().doResize = true;
                 if (ShootUp)
-                    temp.rigidbody.AddForce(Random.Range(0, 100), Strength, Random.Range(0, 100));
+                    temp.GetComponent<Rigidbody>().AddForce(Random.Range(0, 100), Strength, Random.Range(0, 100));
 
                 if (valueCounter < values.Count)
                 {
@@ -96,8 +96,8 @@ public class Popper : MonoBehaviour
             for (int i = 0; i < originSize.Count; i++)
             {
                 ObjToPopUp[i].transform.localScale = originSize[i];
-                if (ObjToPopUp[i].rigidbody)
-                    ObjToPopUp[i].rigidbody.useGravity = true;
+                if (ObjToPopUp[i].GetComponent<Rigidbody>())
+                    ObjToPopUp[i].GetComponent<Rigidbody>().useGravity = true;
             }
             if (ActivateNextEvents.Count > 0)
                 foreach (GameObject g in ActivateNextEvents)
