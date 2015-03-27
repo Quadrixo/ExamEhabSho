@@ -15,8 +15,6 @@ public class HandProperties : MonoBehaviour
 
     enum pickupMode { Normal, Combine };
 
-    public float amountOfParticles = 0;
-
     private pickupMode m_currentMode = pickupMode.Normal;
 
     private Ray m_Aim;
@@ -89,11 +87,6 @@ public class HandProperties : MonoBehaviour
         GUI.Label(new Rect(300, 300, 100, 100), GetComponentInParent<PlayerPower>().Freeze.ToString());
     }
 
-    private void SetGunMode(pickupMode mode)
-    {
-        m_currentMode = mode;
-    }
-
     private bool PickupMode()
     {
         
@@ -137,8 +130,10 @@ public class HandProperties : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) )
         {
+            Debug.Log("tetst");
+
             if(handHit(Distance))
-                HitRay();
+                HitSpark();
             if (m_currentPickupObj)
             {
                 Vector3 dir = Camera.main.transform.forward + new Vector3(0, 0.5f, 0);
@@ -147,11 +142,8 @@ public class HandProperties : MonoBehaviour
                 Mathf.Lerp(-2.5f, 2.5f, dir.y),//makes the cubes move too
                 Mathf.Lerp(-2.5f, 2.5f, dir.z));
 
-                m_hitInfoFromObject.rigidbody.AddForce(dir * Strength);
-                //hit.transform.localScale -= new Vector3(.05f, .05f, .05f);
-                //hit.rigidbody.AddForce(new Vector3(0, 0, 0.01f));
+                m_currentPickupObj.AddForce(dir * Strength);
             }
-            //HitRay(m_hitInfoFromObject);
             nameOfItem = "";
             m_currentPickupObj = null;
         }
@@ -200,7 +192,7 @@ public class HandProperties : MonoBehaviour
                 m_currentPickupObj.transform.Rotate(new Vector3(-Input.GetAxis("Mouse X") * 4, -Input.GetAxis("Mouse Y") * 4, 0));
                 FreezePlayerMouse(true);
             }
-            else // frigör ovanstående
+            else if (Input.GetKeyUp(KeyCode.F)) // frigör ovanstående
             {
                 FreezePlayerMouse(false);
             }
@@ -236,20 +228,10 @@ public class HandProperties : MonoBehaviour
         GetComponentInParent<PlayerPower>().Freeze = value;
     }
 
-    private void ResetPower()
-    {
-        //cube.SetActive(false);
-        //sphere.SetActive(false);
-        //m_gun.SetActive(false);
-    }
-
-    // Siktet, hittar den ett objekt som du kan plocka upp, hämtar den namnet därefter ifall Use knappen används = plockar du upp den.
-
     private void ResetItem()
     {
         //lineRenderer.enabled = false;
-        this.GetComponentInParent<MouseLook>().mouseLook = true;
-        GameObject.Find("Main Camera").GetComponent<MouseLook>().mouseLook = true;
+        Camera.main.GetComponent<MouseLook>().mouseLook = true;
         m_currentPickupObj.freezeRotation = false;
         m_currentPickupObj.useGravity = true;
         m_currentPickupObj = null;
@@ -333,17 +315,12 @@ public class HandProperties : MonoBehaviour
     //    }
     //}
 
-    private void HitRay()
-    {
-        int i = 0;
-        while (i < amountOfParticles)
-        {
-            GameObject temp = (GameObject)Instantiate(particleSystem, m_hitInfoFromObject.point, Quaternion.identity);
-            temp.GetComponent<ParticleSystem>().startSize = Mathf.Lerp(0.05f, 1.5f, m_hitInfoFromObject.transform.localScale.x / 80);
-            temp.transform.LookAt(GameObject.Find("First Person Controller").transform);
-            i++;
-        }
-    }
+    //private void ResetPower()
+    //{
+    //    //cube.SetActive(false);
+    //    //sphere.SetActive(false);
+    //    //m_gun.SetActive(false);
+    //}
 
     //private void MissRay()
     //{
@@ -364,6 +341,18 @@ public class HandProperties : MonoBehaviour
     //    }
     //}
 
+    private void HitSpark()
+    {
+        int i = 0;
+        while (i < 5)
+        {
+            GameObject temp = (GameObject)Instantiate(particleSystem, m_hitInfoFromObject.point, Quaternion.identity);
+            temp.GetComponent<ParticleSystem>().startSize = Mathf.Lerp(0.05f, 1.5f, m_hitInfoFromObject.transform.localScale.x / 80);
+            temp.transform.LookAt(GameObject.Find("Player").transform);
+            i++;
+        }
+    }
+
     public Vector3 handDirection(float _distance)
     {
         return Camera.main.transform.position + _distance * Camera.main.transform.forward;
@@ -378,7 +367,6 @@ public class HandProperties : MonoBehaviour
         {
             if (m_hitInfoFromObject.collider.gameObject.layer == LayerMask.NameToLayer("Item"))
             {
-                
                 nameOfItem = m_hitInfoFromObject.collider.gameObject.name;
                 if (!m_currentPickupObj)
                 {
@@ -413,11 +401,11 @@ public class HandProperties : MonoBehaviour
         }
     }
 
-    public bool objektLifted
+        public bool objektLifted
     {
         get
         {
-            return (m_currentPickupObj);
+            return m_currentPickupObj;
         }
     }
 }

@@ -23,7 +23,7 @@ public class UIScreen : MonoBehaviour {
 
 	void Start () {
 
-        Player = GameObject.Find("First Person Controller").GetComponent<PlayerPower>();
+        Player = GameObject.Find("Player").GetComponent<PlayerPower>();
         pause = GameObject.Find("Pause").GetComponent<PauseMeny>();
         play = GameObject.Find("Play").GetComponent<PlayWindow>();
         Talker = GameObject.Find("Fee");
@@ -38,7 +38,6 @@ public class UIScreen : MonoBehaviour {
 
     public void PauseMeny(bool activate)
     {
-        Debug.Log("ss");
         if (activate)
             pause.setPauseWindow(global::PauseMeny.PauseState.Begin);
         else

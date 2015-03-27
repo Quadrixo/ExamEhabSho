@@ -31,7 +31,7 @@ public class FloorAdder : MonoBehaviour {
         render = GetComponent<MeshRenderer>();
         coll = GetComponent<BoxCollider>();
 
-        player = GameObject.Find("First Person Controller").transform;
+        player = GameObject.Find("Player").transform;
 
 
         coll.enabled = false;

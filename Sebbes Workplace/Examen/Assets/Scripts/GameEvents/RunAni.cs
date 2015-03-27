@@ -26,7 +26,7 @@ public class RunAni : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         a = GetComponent<Animation>();
-        player = GameObject.Find("First Person Controller");
+        player = GameObject.Find("Player");
         GetComponent<Animation>()[clip.name].time = clip.length - 0.01f;
         a.Play(clip.name);
         GetComponent<Animation>()[clip.name].speed = 0;

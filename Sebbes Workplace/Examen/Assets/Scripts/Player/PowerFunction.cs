@@ -169,8 +169,7 @@ public class PowerFunction
             for (int i = 0; i < m_items.Count; i++)
                 for (int k = 0; k < m_items[i].Count; k++)
                 {
-
-                    if (m_items[i].Count - 1 == k) // om den sista värdeRegler
+                    if (m_items[i].Count - 1 == k && i != 2) // om den sista värdeRegler
                     {
                         if (m_items[i][k].m_itemInfo.setValue == 0 && m_items[i][k].m_itemInfo.texten != ".") // nollans regler
                         {
@@ -186,6 +185,7 @@ public class PowerFunction
                             }
                         }
                     }
+
 
                     if (i == 0) // översta talen
                     {
@@ -264,11 +264,11 @@ public class PowerFunction
                                 m_items[i][k].m_itemInfo.setValue += 10;
                                 Pickeditem temp = new Pickeditem("1", m_items[i][k].m_obj.transform.position, 0, (int)m_items[i][k].m_itemInfo.TypeID);
                                 temp.negativeItem = m_items[i][k].negativeItem;
-                                countSize++;
 
                                 temp.setMoveTo = Positions.AddSub;
                                 m_items[0].Add(temp);
-                                Debug.Log("3");
+                                if (m_items[0].Count > countSize)
+                                    countSize++;
                                 return false;
                             }
 
@@ -348,10 +348,12 @@ public class PowerFunction
                                 m_items[i][k].m_itemInfo.setValue -= 10;
                                 Pickeditem temp = new Pickeditem("1", m_items[i][k].m_obj.transform.position, 0, (int)m_items[i][k].m_itemInfo.TypeID);
                                 temp.negativeItem = m_items[i][k].negativeItem;
-                                countSize++;
+
 
                                 temp.setMoveTo = Positions.AddSub;
                                 m_items[0].Add(temp);
+                                if (m_items[0].Count > countSize || m_items[1].Count == 0)
+                                    countSize++;
                                 Debug.Log("3");
                                 return false;
                             }
@@ -446,6 +448,7 @@ public class PowerFunction
                                     }
                                     else if (m_items[i][k].m_itemInfo.setValue != 0)
                                     {
+                                        Debug.Log("0");
                                         CreateRestProdukt("10", m_items[0][1], m_items[i][k]);
                                         m_items[0][1].m_itemInfo.setValue += 1;
                                         return false;
@@ -475,13 +478,16 @@ public class PowerFunction
 
                             else if (m_items[i][k].m_itemInfo.setValue > 9) // lägg till en ny item
                             {
+                                Debug.Log("3");
                                 m_items[i][k].m_itemInfo.setValue -= 10;
                                 Pickeditem temp = new Pickeditem("1", m_items[i][k].m_obj.transform.position, 0, (int)m_items[i][k].m_itemInfo.TypeID);
-                                countSize++;
 
                                 temp.setMoveTo = Positions.AddSub;
                                 m_items[0].Add(temp);
-                                Debug.Log("3");
+
+                                if (m_items[0].Count > countSize || m_items[1].Count == 0)
+                                    countSize++;
+
                                 return false;
                             }
 
@@ -491,6 +497,7 @@ public class PowerFunction
 
                         if (checkResult)
                         {
+                            Debug.Log("check");
                             ready = ResultBasicController();
                             return ready;
                         }
@@ -498,7 +505,6 @@ public class PowerFunction
                     }
                     //Radera onödiga siffrer/märken
                 }
-
 
             return true;
         }
@@ -657,6 +663,7 @@ public class PowerFunction
                 p.StartMS(true, false);
                 p.setMoveTo = Positions.Middle;
             }
+            Debug.Log("nej");
             return true;
         }
         return false;
@@ -689,17 +696,12 @@ public class PowerFunction
                 m_items[0].RemoveAt(0);
 
             }
-            else if (m_items[0].Count > 0)
+            else if (m_items[0].Count > 0) // om det saknas ovanför
             {
-
-
-
                 m_items[2].Add(m_items[0][0]);
                 m_items[0].RemoveAt(0);
-
-
             }
-            else if (m_items[1].Count > 0)
+            else if (m_items[1].Count > 0) // om det saknas under
             {
                 switch (_pow)
                 {
@@ -714,10 +716,11 @@ public class PowerFunction
                     default:
                         break;
                 }
-                Debug.Log(m_items[1][0].negativeItem);
+                
 
                 m_items[2].Add(m_items[1][0]);
                 m_items[1].RemoveAt(0);
+                Debug.Log(m_items[2].Count);
             }
             else
             {
@@ -726,6 +729,7 @@ public class PowerFunction
         }
         else if (m_items[0].Count == 0 && m_items[1].Count == 0)
         {
+            Debug.Log("count");
             checkResult = true;
         }
     }
@@ -784,6 +788,9 @@ public class PowerFunction
             }
             #endregion
             m_items[2].RemoveAt(m_items[2].Count - 1);
+
+            Debug.Log("felet");
+
         }
     }
 
@@ -806,9 +813,7 @@ public class PowerFunction
             {
                 if (ready)
                 {
-                    Debug.Log(_items[1].m_merge.Count);
                     _items[0].MergeBasicPower(_items[1], Functions);
-                    Debug.Log(_items[1].m_merge.Count);
                     _items.RemoveAt(1);
 
                     _items[0].m_obj.SetActive(true);
@@ -985,6 +990,7 @@ public class PowerFunction
                 else if ((value > 0 && getItemMaxSize > PowerStepCounter) ||
                             (value < 0 && PowerStepCounter > -1))
                 {
+                    Debug.Log("powMove++");
 
                     PowerStepCounter += value;
                     if (value > 0)

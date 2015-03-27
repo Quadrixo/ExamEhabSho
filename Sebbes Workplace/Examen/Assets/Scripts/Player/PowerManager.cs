@@ -125,6 +125,7 @@ public class PowerManager
     {
         if (!NextStep && powerFunction.isdone)
         {
+            Debug.Log("powMove");
             NextStep = true;
             powerFunction.PowerStep = _value;
         }

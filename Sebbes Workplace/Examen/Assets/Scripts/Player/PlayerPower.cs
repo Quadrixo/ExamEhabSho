@@ -17,6 +17,7 @@ public class PlayerPower : MonoBehaviour
     private float
         m_distanceCounter = 1f;
 
+    
     private RaycastHit m_hitInfoFromObject;
     private Rigidbody m_currentPickupObj;
 
@@ -214,24 +215,25 @@ public class PlayerPower : MonoBehaviour
         {
             if (UI.pauseMeny.isPaused)
             {
+
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+
                 GetComponent<CharacterMotor>().enabled = !value;
-                Screen.lockCursor = !value;
                 GetComponent<MouseLook>().mouseLook = !value;
-                GameObject.Find("Main Camera").GetComponent<MouseLook>().mouseLook = !value;
+                Camera.main.GetComponent<MouseLook>().mouseLook = !value;
+                Debug.Log(value);
+
             }
             else
             {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+
                 GetComponent<CharacterMotor>().enabled = !value;
-                Screen.lockCursor = value;
                 GetComponent<MouseLook>().mouseLook = !value;
-                GameObject.Find("Main Camera").GetComponent<MouseLook>().mouseLook = !value;
+                Camera.main.GetComponent<MouseLook>().mouseLook = !value;
             }
-        }
-        else
-        {
-            Screen.lockCursor = value;
-            GetComponent<MouseLook>().mouseLook = !value;
-            GameObject.Find("Main Camera").GetComponent<MouseLook>().mouseLook = !value;
         }
     }
 
@@ -253,16 +255,6 @@ public class PlayerPower : MonoBehaviour
         //cube.SetActive(false);
         //sphere.SetActive(false);
         //m_gun.SetActive(false);
-    }
-
-    private void ResetItem()
-    {
-        this.GetComponent<MouseLook>().mouseLook = true;
-        GameObject.Find("Main Camera").GetComponent<MouseLook>().mouseLook = true;
-        m_currentPickupObj.freezeRotation = false;
-        m_currentPickupObj.useGravity = true;
-        m_currentPickupObj = null;
-        m_distanceCounter = 1f;
     }
 
     private float ItemSizeDistance()

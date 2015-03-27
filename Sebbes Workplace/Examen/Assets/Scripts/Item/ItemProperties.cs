@@ -127,8 +127,6 @@ public class ItemProperties : MonoBehaviour {
 
     }
 
-
-
     public string texten
     {
         get
@@ -255,7 +253,7 @@ public class ItemProperties : MonoBehaviour {
         {
             GameObject temp = (GameObject)Instantiate(hitParticle, transform.position, Quaternion.identity);
             temp.GetComponent<ParticleSystem>().startSize = (this.transform.localScale.x);
-            temp.transform.LookAt(GameObject.Find("Main Camera").transform);
+            temp.transform.LookAt(Camera.main.transform);
         }
 
     }
@@ -287,7 +285,6 @@ public class ItemProperties : MonoBehaviour {
             return part2Value;
         }
     }
-
     
     public bool doResize
     {
@@ -312,4 +309,6 @@ public class ItemProperties : MonoBehaviour {
         }
         return temp;
     }
+
+
 }
