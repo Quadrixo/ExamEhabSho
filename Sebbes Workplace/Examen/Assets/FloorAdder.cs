@@ -111,7 +111,7 @@ public class FloorAdder : MonoBehaviour {
             render.enabled = true;
             doh = true;
         }
-        else if (distance < Vector3.Distance(this.transform.position, player.position) && doh && )
+        else if (distance < Vector3.Distance(this.transform.position, player.position) && doh)
         {
             fraction = 0;
             doh = false;

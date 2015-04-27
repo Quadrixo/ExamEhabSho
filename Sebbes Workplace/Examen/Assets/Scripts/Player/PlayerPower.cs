@@ -222,8 +222,6 @@ public class PlayerPower : MonoBehaviour
                 GetComponent<CharacterMotor>().enabled = !value;
                 GetComponent<MouseLook>().mouseLook = !value;
                 Camera.main.GetComponent<MouseLook>().mouseLook = !value;
-                Debug.Log(value);
-
             }
             else
             {

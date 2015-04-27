@@ -6,6 +6,8 @@ public class HandProperties : MonoBehaviour
 
     public GameObject particleSystem;
     public GameObject RightArm;
+
+    public Animator R_animator;
     public LayerMask ObjsToHit;
     
     //private Color c1 = Color.yellow;
@@ -46,6 +48,7 @@ public class HandProperties : MonoBehaviour
         
         
         screen = GameObject.Find("UI").GetComponent<UIScreen>();
+        R_animator = RightArm.GetComponent<Animator>();
         //lineRenderer = gameObject.AddComponent<LineRenderer>();
         //lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
         //lineRenderer.SetColors(c1, c2);
@@ -161,8 +164,8 @@ public class HandProperties : MonoBehaviour
         Vector3 movement = (this.gameObject.GetComponentInParent<CharacterMotor>().movement.velocity * Time.deltaTime) * 2;
         m_currentPickupObj.AddForce(-movement + 150 * travelDir / m_currentPickupObj.mass);
         nameOfItem = "";
-        RightArm.GetComponent<Animator>().SetBool("Grab", false);
-        RightArm.GetComponent<Animator>().Play("Notice_Idle", 0);
+        R_animator.SetBool("Grab", false);
+        R_animator.Play("Notice_Idle", 0);
         ResetItem();
 
     }
@@ -376,8 +379,8 @@ public class HandProperties : MonoBehaviour
                 if (!m_currentPickupObj)
                 {
                     m_currentPickupObj = m_hitInfoFromObject.rigidbody;
-                    RightArm.GetComponent<Animator>().SetBool("Grab", true);
-                    RightArm.GetComponent<Animator>().Play("Grab", 0);
+                    R_animator.SetBool("Grab", true);
+                    R_animator.Play("Grab", 0);
 
                     return true;
                 }
@@ -399,22 +402,22 @@ public class HandProperties : MonoBehaviour
                 {
                     screen.playWindow.AimImageSwitcher(true, false);
 
-                    if (!RightArm.GetComponent<Animator>().GetBool("Looking") && !RightArm.GetComponent<Animator>().GetBool("Grab"))
-                        RightArm.GetComponent<Animator>().Play("Notice", 0);
+                    if (!R_animator.GetBool("Looking") && !R_animator.GetBool("Grab"))
+                        R_animator.Play("Notice", 0);
 
-                    RightArm.GetComponent<Animator>().SetBool("Looking", true);
+                    R_animator.SetBool("Looking", true);
                 }
             }
             else
             {
                 screen.playWindow.AimImageSwitcher(false, false);
-                RightArm.GetComponent<Animator>().SetBool("Looking", false);
+                R_animator.SetBool("Looking", false);
             }
         }
-        else if (!RightArm.GetComponent<Animator>().GetBool("Grab"))
+        else if (!R_animator.GetBool("Grab"))
         {
             screen.playWindow.AimImageSwitcher(false, false);
-            RightArm.GetComponent<Animator>().SetBool("Looking", false);
+            R_animator.SetBool("Looking", false);
         }
     }
 
