@@ -48,6 +48,8 @@
   <ItemGroup>
      <Compile Include="Assets\Bugging.cs" />
      <Compile Include="Assets\FloorAdder.cs" />
+     <Compile Include="Assets\FloorAnimator.cs" />
+     <Compile Include="Assets\PhotonsFly.cs" />
      <Compile Include="Assets\Scripts\GameEvents\Fading.cs" />
      <Compile Include="Assets\Scripts\GameEvents\Intro\DataAssets.cs" />
      <Compile Include="Assets\Scripts\GameEvents\Intro\InteractionIntro.cs" />

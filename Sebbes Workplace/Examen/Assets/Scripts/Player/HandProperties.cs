@@ -5,6 +5,7 @@ public class HandProperties : MonoBehaviour
 {
 
     public GameObject particleSystem;
+    public GameObject RightArm;
     public LayerMask ObjsToHit;
     
     //private Color c1 = Color.yellow;
@@ -42,6 +43,8 @@ public class HandProperties : MonoBehaviour
     // initialization
     void Start()
     {
+        
+        
         screen = GameObject.Find("UI").GetComponent<UIScreen>();
         //lineRenderer = gameObject.AddComponent<LineRenderer>();
         //lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
@@ -158,6 +161,8 @@ public class HandProperties : MonoBehaviour
         Vector3 movement = (this.gameObject.GetComponentInParent<CharacterMotor>().movement.velocity * Time.deltaTime) * 2;
         m_currentPickupObj.AddForce(-movement + 150 * travelDir / m_currentPickupObj.mass);
         nameOfItem = "";
+        RightArm.GetComponent<Animator>().SetBool("Grab", false);
+        RightArm.GetComponent<Animator>().Play("Notice_Idle", 0);
         ResetItem();
 
     }
@@ -371,6 +376,9 @@ public class HandProperties : MonoBehaviour
                 if (!m_currentPickupObj)
                 {
                     m_currentPickupObj = m_hitInfoFromObject.rigidbody;
+                    RightArm.GetComponent<Animator>().SetBool("Grab", true);
+                    RightArm.GetComponent<Animator>().Play("Grab", 0);
+
                     return true;
                 }
             }
@@ -388,16 +396,25 @@ public class HandProperties : MonoBehaviour
             if (m_hitInfoFromObject.collider.gameObject.layer == LayerMask.NameToLayer("Item"))
             {
                 if (!m_currentPickupObj)
+                {
                     screen.playWindow.AimImageSwitcher(true, false);
+
+                    if (!RightArm.GetComponent<Animator>().GetBool("Looking") && !RightArm.GetComponent<Animator>().GetBool("Grab"))
+                        RightArm.GetComponent<Animator>().Play("Notice", 0);
+
+                    RightArm.GetComponent<Animator>().SetBool("Looking", true);
+                }
             }
             else
             {
                 screen.playWindow.AimImageSwitcher(false, false);
+                RightArm.GetComponent<Animator>().SetBool("Looking", false);
             }
         }
-        else
+        else if (!RightArm.GetComponent<Animator>().GetBool("Grab"))
         {
             screen.playWindow.AimImageSwitcher(false, false);
+            RightArm.GetComponent<Animator>().SetBool("Looking", false);
         }
     }
 

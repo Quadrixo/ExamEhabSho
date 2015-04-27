@@ -1,9 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameEvents\Popper.cs">
     <Files>
+      <File FileName="Assets\FloorAnimator.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\GameEvents\RunAni.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\GameEvents\Popper.cs" Line="25" Column="5" />
+      <File FileName="Assets\Scripts\GameEvents\Popper.cs" Line="26" Column="37" />
       <File FileName="Assets\Scripts\Player\PowerFunction.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Player\PlayerPower.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Player\Movement.cs" Line="1" Column="1" />

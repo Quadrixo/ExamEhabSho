@@ -30,7 +30,7 @@ public class Intro : MonoBehaviour {
         {
             text[i] =  new MessageIntro(GameObject.Find("Text" + (i + 1)).GetComponent<Text>());
         }
-        Player = GameObject.Find("First Person Controller").GetComponent<PlayerPower>();
+        Player = GameObject.Find("Player").GetComponent<PlayerPower>();
 
         //light = GameObject.Find("TextLight").GetComponent<Slerpiderp>();
 
